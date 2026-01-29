@@ -1,36 +1,15 @@
-import { notFound } from "next/navigation";
-import { getPaste, incrementViews } from "@/lib/store";
+import { NextResponse } from "next/server";
+import { getPaste } from "@/lib/store";
 
-type PageProps = {
-  params: Promise<{ id: string }>;
-};
+export async function GET(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  const paste = getPaste(params.id);
 
-export default async function PastePage({ params }: PageProps) {
-  const { id } = await params;
+  if (!paste) {
+    return NextResponse.json({ error: "not found" }, { status: 404 });
+  }
 
- const paste = getPaste(params.id);
-
-if (!paste) {
-  return NextResponse.json(
-    { error: "not found" },
-    { status: 404 }
-  );
-}
-
-  const now = Date.now();
-
-  if (paste.expires_at && now > paste.expires_at) notFound();
-
-  if (
-    paste.max_views !== null &&
-    paste.views_used >= paste.max_views
-  ) notFound();
-
-  incrementViews(id);
-
-  return (
-    <main>
-      <pre>{paste.content}</pre>
-    </main>
-  );
+  return NextResponse.json(paste);
 }
