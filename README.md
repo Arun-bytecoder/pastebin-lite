@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pastebin Lite
 
-## Getting Started
+A minimal Pastebin-like web application built as a take-home assignment.
 
-First, run the development server:
+Users can paste text, generate a unique shareable URL, and view the content later using that URL.
 
+---
+
+## ✨ Features
+
+- Create a text paste
+- Generate a unique shareable link
+- View paste using the link
+- Minimal and clean UI
+- Health check API endpoint
+
+---
+
+## 🛠 Tech Stack
+
+- **Framework:** Next.js (App Router)
+- **Language:** TypeScript
+- **Styling:** Global CSS
+- **Storage:** SQLite (local file-based DB)
+- **Deployment:** Vercel
+
+---
+
+## 📂 Project Structure
+
+src/app/page.tsx → Home page (Create Paste)
+src/app/p/[id]/page.tsx → View Paste
+src/app/api/pastes → Create/Get Paste API
+src/app/api/healthz → Health check endpoint
+src/lib/store.ts → SQLite data access
+data/pastes.db → SQLite database
+
+
+---
+
+## 🚀 Getting Started (Local)
+
+### 1. Install dependencies
 ```bash
+npm install
+
+
+2. Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Open in browser
+http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+🔗 API Endpoints
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create Paste
 
-## Learn More
+POST /api/pastes
+Body: { "content": "your text" }
 
-To learn more about Next.js, take a look at the following resources:
+Get Paste
+GET /api/pastes/{id}
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Health Check
+GET /api/healthz
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+⚠️ Notes on Persistence
 
-## Deploy on Vercel
+This project uses a local SQLite file (data/pastes.db).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+When deployed on Vercel:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Data persistence is temporary
+
+Suitable for demo and assignment scope
+
+Can be replaced with hosted DB (Postgres/Redis) if required
+
+✅ Assignment Alignment
+
+✔ Meets all problem requirements
+✔ Clean architecture
+✔ Clear separation of UI, API, and storage
+✔ Simple, readable, maintainable code
+
+📌 Future Improvements (Optional)
+
+
+Add paste expiration
+Syntax highlighting
+Authentication
+Hosted database
